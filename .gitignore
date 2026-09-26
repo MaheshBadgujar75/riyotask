@@ -1,0 +1,8 @@
+# Backups and raw high-res images
+original_images/
+
+# Operating system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
