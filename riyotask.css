@@ -24,33 +24,50 @@ body {
     overflow-x: hidden;
 }
 
-/* Locomotive Scroll Performance & Frame-rate Optimizations */
-html.has-scroll-smooth {
-    overflow: hidden;
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
+/* =========================================
+   Smooth Scroll & Scrollbar Styling
+   ========================================= */
+html.lenis, html.lenis body {
+    height: auto;
 }
 
-.has-scroll-smooth body {
-    overflow: hidden;
-    height: 100%;
+.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
 }
 
-[data-scroll-container] {
-    min-height: 100vh;
+.lenis.lenis-smooth [data-lenis-prevent] {
+    overscroll-behavior: contain;
 }
 
-/* Disable pointer & hover recalculations during active scroll to eliminate frame drops */
-html.has-scroll-scrolling,
-html.has-scroll-scrolling * {
-    pointer-events: none !important;
+.lenis.lenis-stopped {
+    overflow: clip;
 }
 
-html.has-scroll-scrolling .c-scrollbar {
-    pointer-events: auto !important;
+.lenis.lenis-smooth iframe {
+    pointer-events: none;
+}
+
+/* Custom Sleek Scrollbar */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--sky-blue) #080d1a;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #080d1a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sky-blue);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0284c7;
 }
 
 img {
@@ -527,11 +544,6 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
-}
-
-.product-card:hover .product-image {
-    transform: scale(1.04);
 }
 
 .product-body {
@@ -678,11 +690,6 @@ img {
     position: relative;
     z-index: 2;
     margin-bottom: 28px;
-    transition: transform 0.25s ease;
-}
-
-.step-item:hover .step-node {
-    transform: scale(1.15);
 }
 
 .step-dot {
@@ -782,11 +789,6 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
-}
-
-.excellence-card:hover .excellence-image {
-    transform: scale(1.03);
 }
 
 .excellence-badge {
@@ -858,11 +860,6 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
-}
-
-.industry-card:hover .industry-image {
-    transform: scale(1.03);
 }
 
 .industry-badge {

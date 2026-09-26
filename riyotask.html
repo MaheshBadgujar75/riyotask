@@ -8,8 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Locomotive Scroll CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.css">
+    <!-- Smooth Scroll CSS -->
+    <link rel="stylesheet" href="lenis.css">
     <!-- Link to CSS file -->
     <link rel="stylesheet" href="riyotask.css">
 </head>
@@ -430,62 +430,31 @@
 
     </div>
 
-    <!-- Locomotive Scroll JS -->
-    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
+    <!-- Smooth Scroll Engine (Butter-Smooth 60/120 FPS Inertia) -->
+    <script src="lenis.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Distinguish mobile touch devices from desktop/laptop
-            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            // Modern, buttery-smooth momentum scroll with hardware acceleration
+            const lenis = new Lenis({
+                duration: 1.0,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                orientation: 'vertical',
+                gestureOrientation: 'vertical',
+                smoothWheel: true,
+                wheelMultiplier: 1.0,
+                touchMultiplier: 1.5,
+                infinite: false,
+            });
 
-            let scroll;
-            try {
-                scroll = new LocomotiveScroll({
-                    el: document.querySelector('[data-scroll-container]'),
-                    smooth: !isMobile, // Silky smooth inertia on desktop, native 120Hz momentum on mobile
-                    lerp: 0.085, // Snappy & ultra-fluid inertia without floatiness or lag
-                    multiplier: 1.0,
-                    touchMultiplier: 2.0,
-                    firefoxMultiplier: 50,
-                    smartphone: {
-                        smooth: false // Native mobile momentum scroll eliminates all touch input lag
-                    },
-                    tablet: {
-                        smooth: false
-                    },
-                    reloadOnContextChange: true
-                });
-            } catch (err) {
-                console.warn('LocomotiveScroll init error:', err);
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
             }
+            requestAnimationFrame(raf);
 
-            // Debounced update to prevent layout thrashing and forced reflow
-            let updateTimer;
-            const updateScroll = () => {
-                clearTimeout(updateTimer);
-                updateTimer = setTimeout(() => {
-                    if (scroll && typeof scroll.update === 'function') {
-                        scroll.update();
-                    }
-                }, 120);
-            };
-
-            // Update after window load and on individual image loads
-            window.addEventListener('load', updateScroll);
-
-            document.querySelectorAll('img').forEach(img => {
-                if (!img.complete) {
-                    img.addEventListener('load', updateScroll);
-                }
-            });
-
-            // Debounced resize listener
-            let resizeTimer;
-            window.addEventListener('resize', () => {
-                clearTimeout(resizeTimer);
-                resizeTimer = setTimeout(() => {
-                    updateScroll();
-                }, 150);
-            });
+            // Expose globally for API compatibility
+            window.scroll = lenis;
+            window.locomotiveScroll = lenis;
 
             // Mobile menu toggle logic
             const mobileToggle = document.getElementById('mobileToggle');
@@ -496,7 +465,6 @@
                 const isOpen = mobileNavMenu.classList.toggle('is-open');
                 mobileToggle.classList.toggle('is-active', isOpen);
                 mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                updateScroll();
             }
 
             if (mobileToggle) {
@@ -504,31 +472,22 @@
             }
 
             // Smooth internal anchor link navigation
-            const handleNavClick = (targetId) => {
-                if (!targetId || targetId === '#') return;
-                const targetElem = document.querySelector(targetId);
-                if (targetElem) {
-                    if (scroll && !isMobile) {
-                        scroll.scrollTo(targetElem, {
-                            offset: -20,
-                            duration: 750
-                        });
-                    } else {
-                        targetElem.scrollIntoView({ behavior: 'smooth' });
-                    }
-                }
-            };
-
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     const targetId = this.getAttribute('href');
                     if (targetId && targetId !== '#') {
-                        e.preventDefault();
-                        handleNavClick(targetId);
+                        const targetElem = document.querySelector(targetId);
+                        if (targetElem) {
+                            e.preventDefault();
+                            lenis.scrollTo(targetElem, {
+                                offset: -24,
+                                duration: 1.1
+                            });
 
-                        // If mobile menu open, close it cleanly
-                        if (mobileNavMenu && mobileNavMenu.classList.contains('is-open')) {
-                            toggleMenu();
+                            // If mobile menu open, close it cleanly
+                            if (mobileNavMenu && mobileNavMenu.classList.contains('is-open')) {
+                                toggleMenu();
+                            }
                         }
                     }
                 });
