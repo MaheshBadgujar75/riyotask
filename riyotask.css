@@ -1,11 +1,12 @@
-/* =========================================
-   Basic Reset & Performance Setup
-   ========================================= */
+/* Basic Reset & Performance Setup */
 :root {
-    --sky-blue: #0ea5e9; /* Solid Sky Blue */
+    --sky-blue: #0ea5e9;
+    --container-pad: 48px;
 }
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,6 +16,8 @@ html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sky-blue) #080d1a;
 }
 
 body {
@@ -24,10 +27,14 @@ body {
     overflow-x: hidden;
 }
 
-/* =========================================
-   Smooth Scroll & Scrollbar Styling
-   ========================================= */
-html.lenis, html.lenis body {
+img {
+    max-width: 100%;
+    display: block;
+}
+
+/* Smooth Scroll & Custom Scrollbar */
+html.lenis,
+html.lenis body {
     height: auto;
 }
 
@@ -47,12 +54,6 @@ html.lenis, html.lenis body {
     pointer-events: none;
 }
 
-/* Custom Sleek Scrollbar */
-html {
-    scrollbar-width: thin;
-    scrollbar-color: var(--sky-blue) #080d1a;
-}
-
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -70,18 +71,129 @@ html {
     background: #0284c7;
 }
 
-img {
-    max-width: 100%;
+/* Shared Containers & Layout Utilities */
+:is(.nav-container, .stats-container, .products-container, .capability-container, .excellence-container, .industries-container, .pillars-container, .enquiries-container, .footer-container) {
+    width: 100%;
+    padding-inline: var(--container-pad);
+}
+
+:is(.products-section, .industries-section, .enquiries-section) {
+    width: 100%;
+    background-color: #ffffff;
+    padding: 100px 0 120px;
+}
+
+/* Shared Button Text & Arrow Transitions */
+.btn-text {
+    display: inline-block;
+    transition: opacity 0.25s ease;
+}
+
+.btn-arrow,
+.product-arrow,
+.pillar-arrow,
+.cta-arrow {
+    display: inline-block;
+    font-size: 16px;
+    line-height: 1;
+    transition: transform 0.25s ease;
+}
+
+.product-arrow,
+.pillar-arrow {
+    font-size: 14px;
+}
+
+:is(.quote-btn, .mobile-quote-btn, .hero-btn-primary, .hero-btn-secondary, .enquiries-btn-primary, .enquiries-btn-secondary):hover .btn-text {
+    opacity: 0.85;
+}
+
+:is(.quote-btn, .mobile-quote-btn, .hero-btn-primary, .hero-btn-secondary, .product-link):hover :is(.btn-arrow, .product-arrow) {
+    transform: translateX(5px);
+}
+
+:is(.pillar-link, .enquiries-btn-primary):hover :is(.pillar-arrow, .cta-arrow) {
+    transform: translateX(4px);
+}
+
+/* Shared Section Taglines & Headings */
+:is(.products-tagline, .capability-tagline, .excellence-tagline, .industries-tagline, .pillar-tagline, .enquiries-tagline) {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--sky-blue);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.capability-tagline,
+.pillar-tagline,
+.enquiries-tagline {
+    margin-bottom: 18px;
+}
+
+.pillar-tagline {
+    font-size: 11px;
+}
+
+:is(.products-title, .capability-title, .excellence-title, .industries-title) {
+    font-size: clamp(32px, 4.2vw, 48px);
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.15;
+    letter-spacing: -1px;
+}
+
+.capability-title {
+    color: #ffffff;
+}
+
+:is(.products-header, .industries-header) {
+    margin-bottom: 52px;
+}
+
+/* Shared Card Media & Badges */
+:is(.product-image, .industry-image, .excellence-image) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     display: block;
 }
 
-/* =========================================
-   Navbar Container (Transparent Overlay)
-   ========================================= */
+:is(.excellence-card, .industry-card) {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    background-color: #0b1120;
+}
+
+:is(.excellence-badge, .industry-badge) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--sky-blue);
+    color: #080d1a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.excellence-badge {
+    padding: 12px 20px;
+    z-index: 10;
+}
+
+.industry-badge {
+    padding: 10px 18px;
+    z-index: 2;
+}
+
+/* Navbar */
 .navbar {
     width: 100%;
     background-color: transparent;
-    box-shadow: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -89,16 +201,12 @@ img {
 }
 
 .nav-container {
-    width: 100%;
-    padding: 22px 48px;
+    padding-block: 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* =========================================
-   Left Side Logo
-   ========================================= */
 .nav-logo {
     font-size: 24px;
     font-weight: 800;
@@ -108,14 +216,10 @@ img {
     white-space: nowrap;
 }
 
-/* Solid Sky Blue for "India" */
 .logo-highlight {
     color: var(--sky-blue);
 }
 
-/* =========================================
-   Center Navigation Links (6 Items)
-   ========================================= */
 .nav-menu {
     display: flex;
     align-items: center;
@@ -138,7 +242,6 @@ img {
     white-space: nowrap;
 }
 
-/* Hover effect on nav links */
 .nav-link:hover {
     color: var(--sky-blue);
 }
@@ -159,9 +262,6 @@ img {
     width: 100%;
 }
 
-/* =========================================
-   Right Side Button: Request a Quote
-   ========================================= */
 .nav-action {
     display: flex;
     align-items: center;
@@ -172,7 +272,7 @@ img {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background-color: var(--sky-blue); /* Solid sky blue */
+    background-color: var(--sky-blue);
     color: #ffffff;
     text-decoration: none;
     font-size: 14px;
@@ -183,31 +283,7 @@ img {
     white-space: nowrap;
 }
 
-/* Shared button text & arrow transitions */
-.btn-text {
-    display: inline-block;
-    transition: opacity 0.25s ease;
-}
-
-.btn-arrow {
-    display: inline-block;
-    font-size: 16px;
-    line-height: 1;
-    transition: transform 0.25s ease;
-}
-
-/* Hover effect ONLY on text and arrow (no button container hover effect) */
-.quote-btn:hover .btn-text {
-    opacity: 0.85;
-}
-
-.quote-btn:hover .btn-arrow {
-    transform: translateX(5px);
-}
-
-/* =========================================
-   Mobile Menu Toggle & Mobile Drawer
-   ========================================= */
+/* Mobile Toggle & Menu */
 .mobile-toggle-btn {
     display: none;
     flex-direction: column;
@@ -244,7 +320,6 @@ img {
     transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile Nav Menu Dropdown */
 .mobile-nav-menu {
     display: none;
     width: 100%;
@@ -305,32 +380,17 @@ img {
     cursor: pointer;
 }
 
-.mobile-quote-btn:hover .btn-text {
-    opacity: 0.85;
-}
-
-.mobile-quote-btn:hover .btn-arrow {
-    transform: translateX(5px);
-}
-
-/* =========================================
-   Hero Section with Background Image
-   ========================================= */
+/* Hero Section */
 .hero-section {
     position: relative;
     min-height: 100vh;
-    background-image: linear-gradient(
-        to right,
-        rgba(10, 16, 26, 0.92) 0%,
-        rgba(10, 16, 26, 0.72) 48%,
-        rgba(10, 16, 26, 0.35) 100%
-    ), url('herosection.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background: linear-gradient(to right,
+            rgba(10, 16, 26, 0.92) 0%,
+            rgba(10, 16, 26, 0.72) 48%,
+            rgba(10, 16, 26, 0.35) 100%), url('herosection.jpg') center/cover no-repeat;
     display: flex;
     align-items: center;
-    padding: 140px 48px 80px;
+    padding: 140px var(--container-pad) 80px;
     width: 100%;
 }
 
@@ -342,7 +402,6 @@ img {
     max-width: 920px;
 }
 
-/* Hero Typography */
 .hero-tagline {
     display: inline-block;
     font-size: 14px;
@@ -377,11 +436,10 @@ img {
     flex-wrap: wrap;
 }
 
-.hero-btn-primary {
+:is(.hero-btn-primary, .hero-btn-secondary) {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background-color: var(--sky-blue);
     color: #ffffff;
     text-decoration: none;
     font-size: 15px;
@@ -389,38 +447,19 @@ img {
     padding: 13px 28px;
     border-radius: 50px;
     cursor: pointer;
+}
+
+.hero-btn-primary {
+    background-color: var(--sky-blue);
 }
 
 .hero-btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
     background-color: rgba(255, 255, 255, 0.08);
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 13px 28px;
-    border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px);
-    cursor: pointer;
 }
 
-/* Hover effect ONLY on text and arrow for hero buttons */
-.hero-btn-primary:hover .btn-text,
-.hero-btn-secondary:hover .btn-text {
-    opacity: 0.85;
-}
-
-.hero-btn-primary:hover .btn-arrow,
-.hero-btn-secondary:hover .btn-arrow {
-    transform: translateX(5px);
-}
-
-/* =========================================
-   Stats Section
-   ========================================= */
+/* Stats Section */
 .stats-section {
     width: 100%;
     background-color: #f8fafc;
@@ -429,8 +468,6 @@ img {
 }
 
 .stats-container {
-    width: 100%;
-    padding: 0 48px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
 }
@@ -466,42 +503,7 @@ img {
     letter-spacing: 2px;
 }
 
-/* =========================================
-   Product Families Section
-   ========================================= */
-.products-section {
-    width: 100%;
-    background-color: #ffffff;
-    padding: 100px 0 120px;
-}
-
-.products-container {
-    width: 100%;
-    padding: 0 48px;
-}
-
-.products-header {
-    margin-bottom: 52px;
-}
-
-.products-tagline {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-}
-
-.products-title {
-    font-size: clamp(32px, 4.2vw, 48px);
-    font-weight: 800;
-    color: #0f172a;
-    line-height: 1.15;
-    letter-spacing: -1px;
-}
-
+/* Product Families Section */
 .products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -538,13 +540,6 @@ img {
     background-color: #f1f5f9;
 }
 
-.product-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
 .product-body {
     padding: 32px 28px;
     display: flex;
@@ -552,7 +547,7 @@ img {
     flex-grow: 1;
 }
 
-.product-number {
+:is(.product-number, .step-number) {
     font-size: 13px;
     font-weight: 600;
     color: #94a3b8;
@@ -561,7 +556,8 @@ img {
     letter-spacing: 0.5px;
 }
 
-.product-badge-amber {
+.product-badge-amber,
+.product-link-amber {
     color: #f59e0b;
 }
 
@@ -589,7 +585,7 @@ img {
     color: #94a3b8;
 }
 
-.product-link {
+:is(.product-link, .pillar-link) {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -600,23 +596,7 @@ img {
     margin-top: auto;
 }
 
-.product-link-amber {
-    color: #f59e0b;
-}
-
-.product-arrow {
-    font-size: 14px;
-    line-height: 1;
-    transition: transform 0.2s ease;
-}
-
-.product-link:hover .product-arrow {
-    transform: translateX(5px);
-}
-
-/* =========================================
-   Manufacturing Capability Section
-   ========================================= */
+/* Manufacturing Capability Section */
 .capability-section {
     width: 100%;
     background-color: #080d1a;
@@ -624,31 +604,8 @@ img {
     color: #ffffff;
 }
 
-.capability-container {
-    width: 100%;
-    padding: 0 48px;
-}
-
 .capability-header {
     margin-bottom: 70px;
-}
-
-.capability-tagline {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-}
-
-.capability-title {
-    font-size: clamp(32px, 4.2vw, 48px);
-    font-weight: 800;
-    color: #ffffff;
-    line-height: 1.15;
-    letter-spacing: -1px;
 }
 
 .capability-timeline {
@@ -658,7 +615,12 @@ img {
     gap: 40px;
 }
 
-/* Horizontal connecting line between steps (stops precisely at the last node) */
+.step-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
 .step-item:not(:last-child)::before {
     content: '';
     position: absolute;
@@ -670,13 +632,6 @@ img {
     z-index: 1;
 }
 
-.step-item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Node with double concentric circle */
 .step-node {
     width: 26px;
     height: 26px;
@@ -698,15 +653,6 @@ img {
     background-color: var(--sky-blue);
 }
 
-.step-number {
-    font-size: 13px;
-    font-weight: 600;
-    color: #64748b;
-    margin-bottom: 12px;
-    display: block;
-    letter-spacing: 0.5px;
-}
-
 .step-title {
     font-size: 20px;
     font-weight: 700;
@@ -721,40 +667,15 @@ img {
     color: #94a3b8;
 }
 
-/* =========================================
-   Manufacturing Excellence Section
-   ========================================= */
+/* Manufacturing Excellence Section */
 .excellence-section {
     width: 100%;
     background-color: #eef2f6;
     padding: 100px 0 140px;
 }
 
-.excellence-container {
-    width: 100%;
-    padding: 0 48px;
-}
-
 .excellence-header {
     margin-bottom: 50px;
-}
-
-.excellence-tagline {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-}
-
-.excellence-title {
-    font-size: clamp(32px, 4.2vw, 48px);
-    font-weight: 800;
-    color: #0f172a;
-    line-height: 1.15;
-    letter-spacing: -1px;
 }
 
 .excellence-grid {
@@ -766,10 +687,6 @@ img {
 }
 
 .excellence-card {
-    position: relative;
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: #0b1120;
     min-height: 0;
     min-width: 0;
     height: 100%;
@@ -789,66 +706,13 @@ img {
 }
 
 .excellence-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     object-position: center;
-    display: block;
     user-select: none;
     -webkit-user-drag: none;
     transform: none !important;
 }
 
-.excellence-badge {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: var(--sky-blue);
-    color: #080d1a;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 12px 20px;
-    text-transform: uppercase;
-    z-index: 10;
-}
-
-/* =========================================
-   Industries We Enable Section
-   ========================================= */
-.industries-section {
-    width: 100%;
-    background-color: #ffffff;
-    padding: 100px 0 120px;
-}
-
-.industries-container {
-    width: 100%;
-    padding: 0 48px;
-}
-
-.industries-header {
-    margin-bottom: 52px;
-}
-
-.industries-tagline {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 16px;
-}
-
-.industries-title {
-    font-size: clamp(32px, 4.2vw, 48px);
-    font-weight: 800;
-    color: #0f172a;
-    line-height: 1.15;
-    letter-spacing: -1px;
-}
-
+/* Industries We Enable Section */
 .industries-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -856,48 +720,16 @@ img {
 }
 
 .industry-card {
-    position: relative;
     height: 290px;
-    border-radius: 4px;
-    overflow: hidden;
-    background-color: #0b1120;
 }
 
-.industry-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-.industry-badge {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    background-color: var(--sky-blue);
-    color: #080d1a;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    padding: 10px 18px;
-    text-transform: uppercase;
-    z-index: 2;
-}
-
-/* =========================================
-   Pillars / Value Proposition Section
-   ========================================= */
+/* Pillars / Value Proposition Section */
 .pillars-section {
     width: 100%;
     background-color: #f8fafc;
     border-top: 1px solid #e2e8f0;
     border-bottom: 1px solid #e2e8f0;
     padding: 70px 0;
-}
-
-.pillars-container {
-    width: 100%;
-    padding: 0 48px;
 }
 
 .pillars-grid {
@@ -922,16 +754,6 @@ img {
     padding-right: 0;
 }
 
-.pillar-tagline {
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
-}
-
 .pillar-heading {
     font-size: 24px;
     font-weight: 800;
@@ -948,39 +770,8 @@ img {
     margin-bottom: 28px;
 }
 
-.pillar-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 600;
-    color: #0284c7;
-    margin-top: auto;
-}
-
-.pillar-arrow {
-    font-size: 14px;
-    line-height: 1;
-    transition: transform 0.2s ease;
-}
-
-.pillar-link:hover .pillar-arrow {
-    transform: translateX(4px);
-}
-
-/* =========================================
-   Procurement & Technical Enquiries Section
-   ========================================= */
-.enquiries-section {
-    width: 100%;
-    background-color: #ffffff;
-    padding: 100px 0 120px;
-}
-
+/* Procurement & Technical Enquiries Section */
 .enquiries-container {
-    width: 100%;
-    padding: 0 48px;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -989,16 +780,6 @@ img {
 
 .enquiries-content {
     max-width: 820px;
-}
-
-.enquiries-tagline {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 700;
-    color: var(--sky-blue);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 18px;
 }
 
 .enquiries-title {
@@ -1016,66 +797,37 @@ img {
     flex-shrink: 0;
 }
 
-.enquiries-btn-primary {
+:is(.enquiries-btn-primary, .enquiries-btn-secondary) {
     display: inline-flex;
     align-items: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.enquiries-btn-primary {
     gap: 10px;
     background-color: var(--sky-blue);
     color: #080d1a;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
     padding: 14px 26px;
-    border-radius: 4px;
-    cursor: pointer;
-    white-space: nowrap;
 }
 
 .enquiries-btn-secondary {
-    display: inline-flex;
-    align-items: center;
     background-color: #ffffff;
     color: #0f172a;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
     padding: 13px 26px;
     border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    cursor: pointer;
-    white-space: nowrap;
 }
 
-.cta-arrow {
-    font-size: 16px;
-    line-height: 1;
-    display: inline-block;
-    transition: transform 0.25s ease;
-}
-
-/* Hover effects ONLY on text and arrow */
-.enquiries-btn-primary:hover .btn-text,
-.enquiries-btn-secondary:hover .btn-text {
-    opacity: 0.82;
-}
-
-.enquiries-btn-primary:hover .cta-arrow {
-    transform: translateX(4px);
-}
-
-/* =========================================
-   Footer Section
-   ========================================= */
+/* Footer Section */
 .footer-section {
     width: 100%;
     background-color: #060a12;
     padding: 80px 0 40px;
     color: #ffffff;
-}
-
-.footer-container {
-    width: 100%;
-    padding: 0 48px;
 }
 
 .footer-top {
@@ -1164,28 +916,16 @@ img {
     letter-spacing: 0.5px;
 }
 
-/* =========================================
-   Responsive Design for All Screen Types
-   ========================================= */
+/* Responsive Design for All Screen Types */
 
 /* 1. Laptops & Small Desktops (max-width: 1200px) */
 @media (max-width: 1200px) {
-    .nav-container,
-    .stats-container,
-    .products-container,
-    .capability-container,
-    .excellence-container,
-    .industries-container,
-    .pillars-container,
-    .enquiries-container,
-    .footer-container {
-        padding-left: 32px;
-        padding-right: 32px;
+    :root {
+        --container-pad: 32px;
     }
 
     .hero-section {
-        padding-left: 32px;
-        padding-right: 32px;
+        padding-inline: 32px;
     }
 
     .nav-menu {
@@ -1207,30 +947,21 @@ img {
 
 /* 2. Tablets & Medium Screens (max-width: 960px) */
 @media (max-width: 960px) {
-    .nav-container,
-    .stats-container,
-    .products-container,
-    .capability-container,
-    .excellence-container,
-    .industries-container,
-    .pillars-container,
-    .enquiries-container,
-    .footer-container {
-        padding-left: 24px;
-        padding-right: 24px;
+    :root {
+        --container-pad: 24px;
     }
 
     .nav-menu {
         gap: 16px;
     }
 
-    .nav-link {
+    .nav-link,
+    .quote-btn {
         font-size: 13px;
     }
 
     .quote-btn {
         padding: 9px 18px;
-        font-size: 13px;
     }
 
     .hero-section {
@@ -1242,7 +973,6 @@ img {
         font-size: clamp(34px, 6vw, 48px);
     }
 
-    /* Stats 2x2 */
     .stats-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 32px 0;
@@ -1256,8 +986,7 @@ img {
         border-right: none;
     }
 
-    /* Products single/two columns */
-    .products-section {
+    :is(.products-section, .excellence-section, .industries-section, .enquiries-section) {
         padding: 70px 0 80px;
     }
 
@@ -1270,7 +999,6 @@ img {
         height: 280px;
     }
 
-    /* Capability 2x2 */
     .capability-section {
         padding: 80px 0 90px;
     }
@@ -1286,11 +1014,6 @@ img {
 
     .step-item:not(:last-child)::before {
         display: none;
-    }
-
-    /* Excellence stacked */
-    .excellence-section {
-        padding: 70px 0 80px;
     }
 
     .excellence-grid {
@@ -1314,11 +1037,6 @@ img {
         height: 300px;
     }
 
-    /* Industries 2 cols */
-    .industries-section {
-        padding: 70px 0 80px;
-    }
-
     .industries-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
@@ -1328,7 +1046,6 @@ img {
         height: 260px;
     }
 
-    /* Pillars stacked */
     .pillars-section {
         padding: 50px 0;
     }
@@ -1349,18 +1066,12 @@ img {
         padding-bottom: 0;
     }
 
-    /* Enquiries stacked */
-    .enquiries-section {
-        padding: 70px 0 80px;
-    }
-
     .enquiries-container {
         flex-direction: column;
         align-items: flex-start;
         gap: 32px;
     }
 
-    /* Footer 2 cols */
     .footer-section {
         padding: 60px 0 30px;
     }
@@ -1378,7 +1089,10 @@ img {
 
 /* 3. Mobile Screens & Handheld Devices (max-width: 768px) */
 @media (max-width: 768px) {
-    /* Mobile navbar: Logo + CTA button + Hamburger */
+    :root {
+        --container-pad: 20px;
+    }
+
     .nav-menu {
         display: none;
     }
@@ -1388,7 +1102,7 @@ img {
     }
 
     .nav-container {
-        padding: 16px 20px;
+        padding-block: 16px;
     }
 
     .nav-logo {
@@ -1424,14 +1138,9 @@ img {
         width: 100%;
     }
 
-    .hero-btn-primary,
-    .hero-btn-secondary {
+    :is(.hero-btn-primary, .hero-btn-secondary) {
         padding: 11px 22px;
         font-size: 14px;
-    }
-
-    .stats-container {
-        padding: 0 20px;
     }
 
     .stat-number {
@@ -1440,17 +1149,6 @@ img {
 
     .stat-label {
         font-size: 10px;
-    }
-
-    .products-container,
-    .capability-container,
-    .excellence-container,
-    .industries-container,
-    .pillars-container,
-    .enquiries-container,
-    .footer-container {
-        padding-left: 20px;
-        padding-right: 20px;
     }
 
     .excellence-card-large {
@@ -1476,8 +1174,7 @@ img {
         align-items: stretch;
     }
 
-    .enquiries-btn-primary,
-    .enquiries-btn-secondary {
+    :is(.enquiries-btn-primary, .enquiries-btn-secondary) {
         justify-content: center;
         text-align: center;
     }
@@ -1485,12 +1182,16 @@ img {
 
 /* 4. Small Mobile Devices (max-width: 480px) */
 @media (max-width: 480px) {
+    :root {
+        --container-pad: 16px;
+    }
+
     .nav-container {
-        padding: 14px 16px;
+        padding-block: 14px;
     }
 
     .nav-action .quote-btn {
-        display: none; /* Accessible in the mobile hamburger drawer */
+        display: none;
     }
 
     .hero-section {
@@ -1502,8 +1203,7 @@ img {
         align-items: stretch;
     }
 
-    .hero-btn-primary,
-    .hero-btn-secondary {
+    :is(.hero-btn-primary, .hero-btn-secondary) {
         justify-content: center;
         text-align: center;
         width: 100%;
@@ -1512,7 +1212,6 @@ img {
     .stats-container {
         grid-template-columns: 1fr;
         gap: 20px;
-        padding: 0 16px;
     }
 
     .stat-item {
@@ -1523,17 +1222,6 @@ img {
 
     .stat-item:last-child {
         border-bottom: none;
-    }
-
-    .products-container,
-    .capability-container,
-    .excellence-container,
-    .industries-container,
-    .pillars-container,
-    .enquiries-container,
-    .footer-container {
-        padding-left: 16px;
-        padding-right: 16px;
     }
 
     .product-image-box {
@@ -1553,11 +1241,7 @@ img {
         height: 260px;
     }
 
-    .excellence-side .excellence-card {
-        height: 190px;
-    }
-
-    .industry-card {
+    :is(.excellence-side .excellence-card, .industry-card) {
         height: 190px;
     }
 
@@ -1566,16 +1250,13 @@ img {
         gap: 28px;
     }
 
-    .excellence-badge,
-    .industry-badge {
+    :is(.excellence-badge, .industry-badge) {
         font-size: 10px;
         padding: 8px 14px;
     }
 }
 
-/* =========================================
-   Locomotive Scroll Customization
-   ========================================= */
+/* Locomotive Scroll Customization */
 .c-scrollbar {
     width: 8px;
     z-index: 9999;
