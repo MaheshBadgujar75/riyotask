@@ -243,7 +243,7 @@
                 <div class="excellence-grid">
                     <!-- Left Large Image: Coil Handling & Storage -->
                     <div class="excellence-card excellence-card-large">
-                        <img src="steelstorage.jpeg" alt="Coil Handling and Storage" class="excellence-image" loading="lazy" decoding="async">
+                        <img src="steelstorage.jpeg" alt="Coil Handling and Storage" class="excellence-image" width="1600" height="1067">
                         <span class="excellence-badge">COIL HANDLING &amp; STORAGE</span>
                     </div>
 
@@ -251,13 +251,13 @@
                     <div class="excellence-side">
                         <!-- Top Image: Rolling Mill -->
                         <div class="excellence-card">
-                            <img src="rollingmill.jpg" alt="Rolling Mill" class="excellence-image" loading="lazy" decoding="async">
+                            <img src="rollingmill.jpg" alt="Rolling Mill" class="excellence-image" width="1600" height="914">
                             <span class="excellence-badge">ROLLING MILL</span>
                         </div>
 
                         <!-- Bottom Image: QC Laboratory -->
                         <div class="excellence-card">
-                            <img src="QClab.jpg" alt="QC Laboratory" class="excellence-image" loading="lazy" decoding="async">
+                            <img src="QClab.jpg" alt="QC Laboratory" class="excellence-image" width="1600" height="1068">
                             <span class="excellence-badge">QC LABORATORY</span>
                         </div>
                     </div>
@@ -451,6 +451,9 @@
                 requestAnimationFrame(raf);
             }
             requestAnimationFrame(raf);
+
+            // Sync scroll immediately to prevent any sliding motion on reload
+            lenis.scrollTo(window.scrollY, { immediate: true });
 
             // Expose globally for API compatibility
             window.scroll = lenis;
